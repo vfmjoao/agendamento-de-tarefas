@@ -19,7 +19,6 @@ export default function NovaTarefa(){
                 <Text style={styles.nome}>Nome da Tarefa:</Text>
                 <TextInput style={styles.texto}></TextInput>
                 <Text style={styles.nome}>Categoria:</Text>
-
                 <Dropdown
                     styles={styles.dropdown}
                     data = {data}
