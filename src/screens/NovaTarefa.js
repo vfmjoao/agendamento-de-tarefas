@@ -1,14 +1,7 @@
 import {View, Text, StyleSheet, TextInput} from 'react-native';
-import {Dropdown} from 'react-native-element-dropdown';
+import {Picker} from '@react-native-picker/picker';
 
 export default function NovaTarefa(){
-
-    const data = [
-        { label: 'Selecione uma categoria', value: '1' },
-        { label: 'Trabalho', value: '2' },
-        { label: 'Família', value: '3' },
-        { label: 'Amigos', value: '4' },
-    ];
 
     return (
         <View>
@@ -19,19 +12,13 @@ export default function NovaTarefa(){
                 <Text style={styles.nome}>Nome da Tarefa:</Text>
                 <TextInput style={styles.texto}></TextInput>
                 <Text style={styles.nome}>Categoria:</Text>
-                <Dropdown
-                    styles={styles.dropdown}
-                    data = {data}
-                    placeholderStyle={styles.place}
-                    selectedTextStyle={styles.selected}
-                    inputSearchStyle={styles.input}
-                    labelField={"label"}
-                    valueField={"value"}
-                    value= "1"
-                    />
+                <Picker style={styles.picker}>
+                    <Picker.Item label="Estudo" value="estudo"/>
+                    <Picker.Item label="Trabalho" value="trabalho"/>
+                    <Picker.Item label="Academia" value="academia"/>
+                </Picker>
                 <Text style={styles.nome}>Descrição da Tarefa:</Text>
-                <TextInput multiline={true} numberOfLines={4} style={styles.descricao}></TextInput>
-
+                <TextInput multiline={true} numberOfLines={4} style={styles.descricao}placeholder='Descreva sua tarefa'></TextInput>
             </View>
         </View>
     )
@@ -60,6 +47,11 @@ const styles = StyleSheet.create({
         height: 100,
         padding: 15,
     },
+    nome: {
+        color: 'black',
+        fontSize: 15,
+        fontWeight: 'bold',
+    },
     texto: {
         color: 'black',
         fontSize: 12,
@@ -68,11 +60,6 @@ const styles = StyleSheet.create({
         padding: 5,
         borderRadius: 8,
         marginBottom: 10
-    },
-    nome: {
-        color: 'black',
-        fontSize: 15,
-        fontWeight: 'bold'
     },
     descricao: {
         color: 'black',
@@ -85,31 +72,13 @@ const styles = StyleSheet.create({
         height: 500,
         borderRadius: 8,
     },
-    dropdown: {
-        backgroundColor: '#fff',
-        borderColor: '#ccc',
-        borderWidth: 2,
-        borderRadius: 8,
-        padding: 5,
-        marginBottom: 10
-    },
-    selected: {
-        backgroundColor: '#ccc',
-        borderRadius: 5,
-        padding: 5,
-        color: 'black'
-    },
-    place: {
-        color: 'gray',
-        fontSize: 12
-    },
-    input: {
-        color: 'black',
-        fontSize: 12,
-        borderColor:'#ccc',
+    picker: {
+        backgroundColor: 'white',
         borderWidth: 1,
-        padding: 5,
         borderRadius: 8,
-        marginBottom: 10
+        borderColor: '#ccc',
+        padding: 5
+        ,
+        marginBottom: 10,
     }
 })
