@@ -13,7 +13,7 @@ const RootStack = createNativeStackNavigator({
   screens: {
     Home: Home,
     EditTask: EditTask,
-    NovaTarefa: NovaTarefa
+    NovaTarefa: NovaTarefa,
   },
 });
 

@@ -1,28 +1,80 @@
-import {View, Text, StyleSheet, TextInput} from 'react-native';
-import {Picker} from '@react-native-picker/picker';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import { addData } from '../storage/async-storage';
 
-export default function NovaTarefa(){
+export default function NovaTarefa() {
+
+    const navigation = useNavigation();
+
+    const [ nome, setNome ] = useState('')
+    const [ categotia, setCategotia ] = useState('prova')
+    const [ descricao, setDescricao ] = useState('')
+    const [ data, setData ] = useState('')
+
+    const handleSave = () => {
+        const tarefa = {
+            nome: nome,
+            categoria: categotia,
+            data: data,
+            descricao: descricao
+        };
+        addData(tarefa)
+        alert("Nova tarefa cadastrada!")
+        navigation.navigate('Home')
+    }
 
     return (
         <View>
             <View style={styles.cabecalho}>
                 <Text style={styles.titulo}>Adicionar Tarefa</Text>
             </View>
-            <View style={styles.opcao}>
-                <Text style={styles.nome}>Nome da Tarefa:</Text>
-                <TextInput style={styles.texto}></TextInput>
-                <Text style={styles.nome}>Categoria:</Text>
-                <Picker style={styles.picker}>
-                    <Picker.Item label="Estudo" value="estudo"/>
-                    <Picker.Item label="Trabalho" value="trabalho"/>
-                    <Picker.Item label="Academia" value="academia"/>
+            <View style={styles.body}>
+                <Text style={styles.texto}>Nome da Tarefa:</Text>
+                <TextInput style={styles.textInput} value={nome} onChangeText={texto => setNome(texto)} />
+
+                <Text style={styles.texto}>Categotia da Tarefa:</Text>
+                <Picker style={styles.textInput} selectedValue={categotia} onValueChange={texto => setCategotia(texto)}>
+                    <Picker.Item label="Estudo" value="estudo" />
+                    <Picker.Item label="Trabalho" value="trabalho" />
+                    <Picker.Item label="Reunião" value="reuniao" />
+                    <Picker.Item label="Prova" value="prova" />
+                    <Picker.Item label="Aula" value="aula" />
                 </Picker>
-                <Text style={styles.nome}>Descrição da Tarefa:</Text>
-                <TextInput multiline={true} numberOfLines={4} style={styles.descricao}placeholder='Descreva sua tarefa'></TextInput>
+
+                <Text style={styles.texto}>Descrição da Tarefa:</Text>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder='Value'
+                    multiline
+                    numberOfLines={3}
+                    value={descricao} onChangeText={texto => setDescricao(texto)}
+                />
+
+                <TextInput 
+                    style={styles.textDate}
+                    placeholder='dd/mm/yyyy'
+                    value={data} onChangeText={texto => setData(texto)}
+                />
+
+                <View style={styles.containerBotao}>
+                    <TouchableOpacity style={styles.botao} onPress={() => navigation.goBack()}>
+                        <Text style={styles.botaoTexto}>Cancel</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.botao} onPress={() => {
+                        handleSave()
+                    }}>
+                        <Text style={styles.botaoTexto}>OK</Text>
+                    </TouchableOpacity>
+                </View>
+
             </View>
         </View>
     )
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -42,43 +94,38 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center'
     },
-    opcao: {
-        width: '100%',
-        height: 100,
+    body: {
         padding: 15,
-    },
-    nome: {
-        color: 'black',
-        fontSize: 15,
-        fontWeight: 'bold',
     },
     texto: {
-        color: 'black',
-        fontSize: 12,
-        borderColor:'#ccc',
-        borderWidth: 1,
-        padding: 5,
-        borderRadius: 8,
-        marginBottom: 10
+        marginBottom: 5
     },
-    descricao: {
-        color: 'black',
-        fontSize: 12,
-        borderColor:'#ccc',
+    textInput: {
         borderWidth: 1,
-        padding: 15,
-        paddingBottom: 100,
-        width: '100%',
-        height: 500,
-        borderRadius: 8,
-    },
-    picker: {
-        backgroundColor: 'white',
-        borderWidth: 1,
-        borderRadius: 8,
+        borderRadius: 10,
         borderColor: '#ccc',
-        padding: 5
-        ,
-        marginBottom: 10,
+        padding: 10,
+        backgroundColor: 'white',
+        marginBottom: 15
+    },
+    textDate: {
+        height: 60,
+        borderWidth: 3,
+        borderColor: 'indigo',
+        borderRadius: 5,
+        margin: 40,
+        marginVertical: 30,
+        padding: 15,
+        backgroundColor: 'white'
+    },
+    containerBotao: {
+        flexDirection: 'row',
+        justifyContent: 'end'
+    },
+    botao: {
+        padding: 15
+    },
+    botaoTexto: {
+        color: 'indigo'
     }
-})
+});
