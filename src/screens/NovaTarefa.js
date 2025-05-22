@@ -13,14 +13,14 @@ export default function NovaTarefa() {
     const [ descricao, setDescricao ] = useState('')
     const [ data, setData ] = useState('')
 
-    const handleSave = () => {
+    const handleSave = async () => {
         const tarefa = {
             nome: nome,
             categoria: categotia,
             data: data,
             descricao: descricao
         };
-        addData(tarefa)
+        await addData(tarefa)
         alert("Nova tarefa cadastrada!")
         navigation.navigate('Home')
     }

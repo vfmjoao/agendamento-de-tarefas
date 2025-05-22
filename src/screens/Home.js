@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import TarefaItem from '../components/TarefaItem';
 import { getData } from '../storage/async-storage';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Home() {
@@ -10,12 +10,20 @@ export default function Home() {
 
 
     const [ tasks, setTasks ] = useState(null)
+    const [isLoaded, setIsLoaded] = useState(true);
 
-    // Executa ao carregar a página
-    useEffect(async () => {
+    const loadData = async () => {
         const data = await getData();
         setTasks(data);
-    }, []);
+        setIsLoaded(!isLoaded);
+    }
+
+    // Executa ao carregar a página
+    useEffect(() => {
+        if (isLoaded){
+            loadData();
+        }
+    }, [isLoaded]);
 
     return (
         <View style={styles.container}>

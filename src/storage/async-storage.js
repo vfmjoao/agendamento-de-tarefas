@@ -30,3 +30,7 @@ export {
     setData,
     addData
 }
+
+export default {
+    nome: 'joao victor'
+}
