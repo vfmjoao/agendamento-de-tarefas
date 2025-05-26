@@ -8,19 +8,18 @@ export default function Home() {
 
     const navigation = useNavigation();
 
-
     const [ tasks, setTasks ] = useState(null)
-    const [isLoaded, setIsLoaded] = useState(true);
+    const [ isLoaded, setIsLoaded ] = useState(true)
 
     const loadData = async () => {
         const data = await getData();
         setTasks(data);
-        setIsLoaded(!isLoaded);
+        setIsLoaded(!isLoaded)
     }
 
     // Executa ao carregar a página
     useEffect(() => {
-        if (isLoaded){
+        if(isLoaded){
             loadData();
         }
     }, [isLoaded]);
@@ -33,9 +32,10 @@ export default function Home() {
             </View>
             <ScrollView style={styles.body}>
                 {
-                    tasks && tasks.map((item) => {
+                    tasks && tasks.map((item, index) => {
                         return (
-                            <TarefaItem 
+                            <TarefaItem
+                                key={index}
                                 nome={item.nome}
                                 status={item.status}
                                 data={item.data}

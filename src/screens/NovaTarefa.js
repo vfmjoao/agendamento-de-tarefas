@@ -3,6 +3,7 @@ import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { addData } from '../storage/async-storage';
+import MaskInput from 'react-native-mask-input';
 
 export default function NovaTarefa() {
 
@@ -18,11 +19,23 @@ export default function NovaTarefa() {
             nome: nome,
             categoria: categotia,
             data: data,
-            descricao: descricao
+            descricao: descricao,
+            status: 'pendente'
         };
-        await addData(tarefa)
-        alert("Nova tarefa cadastrada!")
-        navigation.navigate('Home')
+        if (nome.trim() === '') {
+            alert('Por favor, insira um nome para a tarefa.');
+        }
+        else if (descricao.trim() === '') {
+            alert('Por favor, insira uma descricao para a tarefa.');
+        }
+        else if (data.trim() === '') {
+            alert('Por favor, insira uma data para a tarefa.');
+        }
+        else {
+            await addData(tarefa)
+            alert("Nova tarefa cadastrada!")
+            navigation.navigate('Home')
+        }
     }
 
     return (
@@ -52,10 +65,11 @@ export default function NovaTarefa() {
                     value={descricao} onChangeText={texto => setDescricao(texto)}
                 />
 
-                <TextInput 
+                <MaskInput
                     style={styles.textDate}
                     placeholder='dd/mm/yyyy'
                     value={data} onChangeText={texto => setData(texto)}
+                    mask={[ /\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/ ]}
                 />
 
                 <View style={styles.containerBotao}>
