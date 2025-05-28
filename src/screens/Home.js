@@ -3,6 +3,7 @@ import TarefaItem from '../components/TarefaItem';
 import { getData } from '../storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function Home() {
 
@@ -34,14 +35,10 @@ export default function Home() {
                 {
                     tasks && tasks.map((item, index) => {
                         return (
-                            <TarefaItem
+                            <TarefaItem 
                                 key={index}
-                                nome={item.nome}
-                                status={item.status}
-                                data={item.data}
-                                categoria={item.categoria}
-                            />
-                        )
+                                task={item}
+                            />)
                     })
                 }
             </ScrollView>
@@ -50,9 +47,8 @@ export default function Home() {
                 style={styles.botaoAdicionar}
                 onPress={() => {
                     navigation.navigate("NovaTarefa")
-                }}
-            >
-                <Text style={styles.botaoMais}>+</Text>
+                }}>
+                <Ionicons name="add-outline" size={35} color="#FFF"/>
             </TouchableOpacity>
         </View>
     );
@@ -88,8 +84,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     botaoAdicionar: {
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
         backgroundColor: 'blue',
         borderRadius: 30,
         position: 'absolute',
